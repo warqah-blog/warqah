@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://warqah.pages.dev/sitemap-index.xml
+Sitemap: https://warqah-blog.warqah-blog.workers.dev/sitemap-index.xml

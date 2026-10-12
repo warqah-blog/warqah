@@ -3,8 +3,8 @@
 Warqah is an independent bilingual Arabic-English publication offering clear articles, practical guides, and evidence-based comparisons.
 
 ## Main sections
-- Arabic articles: https://warqah.pages.dev/ar/
-- English articles: https://warqah.pages.dev/en/
+- Arabic articles: https://warqah-blog.warqah-blog.workers.dev/ar/
+- English articles: https://warqah-blog.warqah-blog.workers.dev/en/
 
 ## Editorial principles
 - Prefer primary and authoritative sources.
