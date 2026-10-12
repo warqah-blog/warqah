@@ -1,0 +1,17 @@
+---
+const { article, lang } = Astro.props;
+const d = article.data;
+const slug = article.id.replace(/\.(md|mdx)$/, '').split('/').pop();
+const href = `/${lang}/articles/${slug}/`;
+---
+<article class="card">
+  <a href={href} aria-label={d.title}>
+    <img src={d.image} alt={d.imageAlt} width="900" height="560" loading="lazy" />
+    <div class="card-body">
+      <span class="tag">{d.category}</span>
+      <h3>{d.title}</h3>
+      <p>{d.description}</p>
+      <div class="meta"><span>{d.author}</span><time datetime={d.published.toISOString()}>{d.published.toLocaleDateString(lang === 'ar' ? 'ar-SA' : 'en-US', { dateStyle: 'medium' })}</time></div>
+    </div>
+  </a>
+</article>

@@ -1,0 +1,42 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Newsletter from '../../../components/Newsletter.astro';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map((article) => ({ params: { lang: article.data.lang, slug: article.id.replace(/\.(md|mdx)$/, '').split('/').pop() }, props: { article } }));
+}
+const { article } = Astro.props;
+const { Content } = await render(article);
+const d = article.data;
+const lang = d.lang;
+const isAr = lang === 'ar';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const alternate = d.translation ? new URL(`/${isAr ? 'en' : 'ar'}/articles/${d.translation}/`, Astro.site) : new URL(`/${isAr ? 'en' : 'ar'}/`, Astro.site);
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: d.title, description: d.description,
+  image: [new URL(d.image, Astro.site)], datePublished: d.published.toISOString(), dateModified: (d.updated ?? d.published).toISOString(),
+  author: { '@type': 'Person', name: d.author }, publisher: { '@type': 'Organization', name: isAr ? 'ورقة' : 'Warqah', url: new URL(`/${lang}/`, Astro.site) },
+  mainEntityOfPage: canonical, inLanguage: lang
+};
+---
+<BaseLayout lang={lang} title={`${d.title} — ${isAr ? 'ورقة' : 'Warqah'}`} description={d.description} canonical={canonical} alternate={alternate} image={d.image} type="article" jsonLd={jsonLd}>
+  <article>
+    <div class="article-paper">
+      <header class="article-hero">
+        <nav class="breadcrumb" aria-label={isAr ? 'مسار الصفحة' : 'Breadcrumb'}><a href={`/${lang}/`}>{isAr ? 'الرئيسية' : 'Home'}</a> / <span>{d.category}</span></nav>
+        <span class="tag">{d.category}</span>
+        <h1>{d.title}</h1>
+        <p class="lead">{d.description}</p>
+        <div class="meta"><span>{d.author}</span><time datetime={d.published.toISOString()}>{d.published.toLocaleDateString(isAr ? 'ar-SA' : 'en-US', { dateStyle: 'long' })}</time><span>{isAr ? 'وقت القراءة: 5 دقائق' : '5 min read'}</span></div>
+      </header>
+      <img class="cover" src={d.image} alt={d.imageAlt} width="1400" height="700" />
+      <div class="prose">
+        <Content />
+        {d.sources.length > 0 && <section class="sources" aria-labelledby="sources-title"><h2 id="sources-title">{isAr ? 'المصادر' : 'Sources'}</h2><ol>{d.sources.map((source) => <li><a href={source.url} rel="noopener noreferrer">{source.label}</a></li>)}</ol></section>}
+      </div>
+    </div>
+  </article>
+  <Newsletter lang={lang} />
+</BaseLayout>

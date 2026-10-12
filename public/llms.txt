@@ -1,0 +1,15 @@
+# Warqah | ورقة
+
+Warqah is an independent bilingual Arabic-English publication offering clear articles, practical guides, and evidence-based comparisons.
+
+## Main sections
+- Arabic articles: https://warqah.pages.dev/ar/
+- English articles: https://warqah.pages.dev/en/
+
+## Editorial principles
+- Prefer primary and authoritative sources.
+- Distinguish reporting, analysis, and opinion.
+- Display publication and update dates.
+- Correct material errors transparently.
+
+Contact: warqah.blog@gmail.com

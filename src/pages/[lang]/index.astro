@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+
+export function getStaticPaths() { return [{ params: { lang: 'ar' } }, { params: { lang: 'en' } }]; }
+const lang = Astro.params.lang;
+const isAr = lang === 'ar';
+const articles = (await getCollection('articles', ({ data }) => data.lang === lang)).sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
+const featured = articles.find((a) => a.data.featured) ?? articles[0];
+const rest = articles.filter((a) => a.id !== featured.id);
+const featuredSlug = featured.id.replace(/\.(md|mdx)$/, '').split('/').pop();
+const alternate = new URL(`/${isAr ? 'en' : 'ar'}/`, Astro.site);
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'WebSite', name: isAr ? 'ورقة' : 'Warqah', url: new URL(`/${lang}/`, Astro.site),
+  inLanguage: lang, description: isAr ? 'مجلة عربية مستقلة للمقالات والمقارنات الموثوقة.' : 'An independent magazine for thoughtful articles and trusted comparisons.'
+};
+---
+<BaseLayout lang={lang} alternate={alternate} jsonLd={jsonLd} title={isAr ? 'ورقة — مقالات تستحق وقتك' : 'Warqah — Stories worth your time'} description={isAr ? 'مقالات واضحة ومقارنات موثوقة في التقنية والأعمال والحياة.' : 'Clear articles and trusted comparisons across technology, business and life.'}>
+  <section class="hero container">
+    <span class="kicker">{isAr ? 'مجلة مستقلة' : 'Independent magazine'}</span>
+    <h1>{isAr ? 'أفكار واضحة، بعيدًا عن الضجيج.' : 'Clear ideas, beyond the noise.'}</h1>
+    <p>{isAr ? 'نكتب لنساعدك على الفهم والاختيار؛ بمقالات موثقة، ومقارنات عملية، ولغة تحترم وقتك.' : 'Thoughtful reporting, useful comparisons and writing that respects your time.'}</p>
+  </section>
+  <section class="container" aria-labelledby="featured-title">
+    <a class="featured" href={`/${lang}/articles/${featuredSlug}/`}>
+      <img src={featured.data.image} alt={featured.data.imageAlt} width="1000" height="800" />
+      <div class="featured-copy">
+        <span class="tag">{featured.data.category}</span>
+        <h2 id="featured-title">{featured.data.title}</h2>
+        <p>{featured.data.description}</p>
+        <div class="meta"><span>{featured.data.author}</span><time datetime={featured.data.published.toISOString()}>{featured.data.published.toLocaleDateString(isAr ? 'ar-SA' : 'en-US', { dateStyle: 'long' })}</time></div>
+      </div>
+    </a>
+  </section>
+  <section class="container" id="articles" aria-labelledby="articles-title">
+    <div class="section-head"><h2 id="articles-title">{isAr ? 'أحدث المقالات' : 'Latest stories'}</h2><span>{isAr ? `${articles.length} مقالات` : `${articles.length} articles`}</span></div>
+    <div class="article-grid">{rest.map((article) => <ArticleCard article={article} lang={lang} />)}</div>
+  </section>
+  <Newsletter lang={lang} />
+</BaseLayout>

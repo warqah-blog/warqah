@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+const {
+  title = 'ورقة — مقالات تستحق وقتك',
+  description = 'ورقة مجلة عربية مستقلة تنشر مقالات واضحة ومقارنات موثوقة في التقنية والأعمال والحياة.',
+  lang = 'ar',
+  canonical,
+  alternate,
+  image = '/images/warqah-og.svg',
+  type = 'website',
+  jsonLd,
+} = Astro.props;
+const isAr = lang === 'ar';
+const pageUrl = canonical ?? new URL(Astro.url.pathname, Astro.site);
+const imageUrl = new URL(image, Astro.site);
+const alternateHref = alternate instanceof URL ? alternate.pathname : alternate;
+---
+<!doctype html>
+<html lang={lang} dir={isAr ? 'rtl' : 'ltr'}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="alternate" hreflang={isAr ? 'en' : 'ar'} href={alternate} />
+    <link rel="alternate" hreflang="x-default" href={new URL('/ar/', Astro.site)} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:locale" content={isAr ? 'ar_SA' : 'en_US'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#f9fffa" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#content">{isAr ? 'انتقل إلى المحتوى' : 'Skip to content'}</a>
+    <header class="site-header">
+      <nav class="nav container" aria-label={isAr ? 'التنقل الرئيسي' : 'Main navigation'}>
+        <a class="brand" href={`/${lang}/`} aria-label={isAr ? 'ورقة — الرئيسية' : 'Warqah — Home'}><img src="/logo.svg" alt="" width="108" height="45" /></a>
+        <div class="nav-links">
+          <a href={`/${lang}/`} aria-current={Astro.url.pathname === `/${lang}/` ? 'page' : undefined}>{isAr ? 'الرئيسية' : 'Home'}</a>
+          <a href={`/${lang}/#articles`}>{isAr ? 'المقالات' : 'Articles'}</a>
+          <a href={`/${lang}/#newsletter`}>{isAr ? 'النشرة البريدية' : 'Newsletter'}</a>
+        </div>
+        <a class="lang-switch" href={alternateHref}>{isAr ? 'EN' : 'العربية'}</a>
+      </nav>
+    </header>
+    <main id="content"><slot /></main>
+    <footer class="site-footer">
+      <div class="container footer-row">
+        <strong>{isAr ? 'ورقة' : 'Warqah'}</strong>
+        <span>{isAr ? 'محتوى واضح، من مصادر موثوقة.' : 'Clear writing, grounded in reliable sources.'}</span>
+        <span>© {new Date().getFullYear()}</span>
+      </div>
+    </footer>
+  </body>
+</html>

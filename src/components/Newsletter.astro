@@ -1,0 +1,16 @@
+---
+const { lang = 'ar' } = Astro.props;
+const isAr = lang === 'ar';
+---
+<section class="newsletter container" id="newsletter" aria-labelledby="newsletter-title">
+  <div>
+    <span class="kicker">{isAr ? 'نشرة ورقة' : 'The Warqah Letter'}</span>
+    <h2 id="newsletter-title">{isAr ? 'مقال يستحق القراءة، حين يكون لدينا ما يستحق الإرسال.' : 'One worthwhile read, only when we have something worth sending.'}</h2>
+    <p>{isAr ? 'بدون إزعاج، وبدون رسائل يومية.' : 'No noise. No daily emails.'}</p>
+  </div>
+  <form class="subscribe-form" aria-label={isAr ? 'الاشتراك في النشرة البريدية' : 'Newsletter signup'}>
+    <input type="email" name="email" autocomplete="email" required placeholder={isAr ? 'بريدك الإلكتروني' : 'Your email address'} aria-label={isAr ? 'البريد الإلكتروني' : 'Email address'} />
+    <button type="submit">{isAr ? 'اشترك' : 'Subscribe'}</button>
+  </form>
+  <small class="form-note">{isAr ? 'لن نشارك بريدك مع أي جهة.' : 'We will never share your email.'}</small>
+</section>
