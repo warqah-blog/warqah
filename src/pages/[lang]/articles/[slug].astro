@@ -47,3 +47,9 @@ const jsonLd = d.faq.length > 0 ? {
   </article>
   <Newsletter lang={lang} />
 </BaseLayout>
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('.prose a[href^="http"]').forEach((link) => {
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+  });
+</script>

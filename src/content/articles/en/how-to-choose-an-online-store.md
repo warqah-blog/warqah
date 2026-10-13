@@ -7,7 +7,7 @@ author: "Warqah Editorial"
 published: 2026-10-12
 image: "/images/guide.svg"
 imageAlt: "Organized sheets and cards representing a comparison of choices"
-featured: true
+featured: false
 translation: "كيف-تختار-متجرا-الكترونيا"
 sources: []
 ---

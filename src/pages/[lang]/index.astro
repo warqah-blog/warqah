@@ -9,7 +9,6 @@ const lang = Astro.params.lang;
 const isAr = lang === 'ar';
 const articles = (await getCollection('articles', ({ data }) => data.lang === lang)).sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
 const featured = articles.find((a) => a.data.featured) ?? articles[0];
-const rest = articles.filter((a) => a.id !== featured.id);
 const featuredSlug = featured.id.replace(/\.(md|mdx)$/, '').split('/').pop();
 const alternate = new URL(`/${isAr ? 'en' : 'ar'}/`, Astro.site);
 const jsonLd = {
@@ -25,7 +24,7 @@ const jsonLd = {
   </section>
   <section class="container" aria-labelledby="featured-title">
     <a class="featured" href={`/${lang}/articles/${featuredSlug}/`}>
-      <img src={featured.data.image} alt={featured.data.imageAlt} width="1000" height="800" />
+      <div class="featured-media"><img src={featured.data.image} alt={featured.data.imageAlt} width="1120" height="640" /></div>
       <div class="featured-copy">
         <span class="tag">{featured.data.category}</span>
         <h2 id="featured-title">{featured.data.title}</h2>
@@ -36,7 +35,7 @@ const jsonLd = {
   </section>
   <section class="container" id="articles" aria-labelledby="articles-title">
     <div class="section-head"><h2 id="articles-title">{isAr ? 'أحدث المقالات' : 'Latest stories'}</h2><span>{isAr ? `${articles.length} مقالات` : `${articles.length} articles`}</span></div>
-    <div class="article-grid">{rest.map((article) => <ArticleCard article={article} lang={lang} />)}</div>
+    <div class="article-grid">{articles.map((article) => <ArticleCard article={article} lang={lang} />)}</div>
   </section>
   <Newsletter lang={lang} />
 </BaseLayout>
