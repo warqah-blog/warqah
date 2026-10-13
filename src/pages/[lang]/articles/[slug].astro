@@ -38,7 +38,7 @@ const jsonLd = d.faq.length > 0 ? {
         <p class="lead">{d.description}</p>
         <div class="meta"><span>{d.author}</span><time datetime={d.published.toISOString()}>{d.published.toLocaleDateString(isAr ? 'ar-SA' : 'en-US', { dateStyle: 'long' })}</time><span>{isAr ? 'وقت القراءة: 5 دقائق' : '5 min read'}</span></div>
       </header>
-      <img class="cover" src={d.image} alt={d.imageAlt} width="1400" height="700" />
+      <img class="cover" src={d.image} alt={d.imageAlt} width="1774" height="887" />
       <div class="prose">
         <Content />
         {d.sources.length > 0 && <section class="sources" aria-labelledby="sources-title"><h2 id="sources-title">{isAr ? 'المصادر' : 'Sources'}</h2><ol>{d.sources.map((source) => <li><a href={source.url} rel="noopener noreferrer">{source.label}</a></li>)}</ol></section>}
