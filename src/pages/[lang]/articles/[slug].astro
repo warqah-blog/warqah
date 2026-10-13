@@ -14,12 +14,19 @@ const lang = d.lang;
 const isAr = lang === 'ar';
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const alternate = d.translation ? new URL(`/${isAr ? 'en' : 'ar'}/articles/${d.translation}/`, Astro.site) : new URL(`/${isAr ? 'en' : 'ar'}/`, Astro.site);
-const jsonLd = {
-  '@context': 'https://schema.org', '@type': 'Article', headline: d.title, description: d.description,
+const articleSchema = {
+  '@type': 'Article', headline: d.title, description: d.description,
   image: [new URL(d.image, Astro.site)], datePublished: d.published.toISOString(), dateModified: (d.updated ?? d.published).toISOString(),
-  author: { '@type': 'Person', name: d.author }, publisher: { '@type': 'Organization', name: isAr ? 'ورقة' : 'Warqah', url: new URL(`/${lang}/`, Astro.site) },
+  author: { '@type': 'Organization', name: d.author }, publisher: { '@type': 'Organization', name: isAr ? 'ورقة' : 'Warqah', url: new URL(`/${lang}/`, Astro.site) },
   mainEntityOfPage: canonical, inLanguage: lang
 };
+const jsonLd = d.faq.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@graph': [articleSchema, {
+    '@type': 'FAQPage',
+    mainEntity: d.faq.map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } }))
+  }]
+} : { '@context': 'https://schema.org', ...articleSchema };
 ---
 <BaseLayout lang={lang} title={`${d.title} — ${isAr ? 'ورقة' : 'Warqah'}`} description={d.description} canonical={canonical} alternate={alternate} image={d.image} type="article" jsonLd={jsonLd}>
   <article>

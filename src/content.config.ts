@@ -16,6 +16,7 @@ const articles = defineCollection({
     featured: z.boolean().default(false),
     translation: z.string().optional(),
     sources: z.array(z.object({ label: z.string(), url: z.string().url() })).default([]),
+    faq: z.array(z.object({ question: z.string(), answer: z.string() })).default([]),
   }),
 });
 

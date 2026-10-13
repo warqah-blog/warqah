@@ -73,6 +73,14 @@ button, input { font: inherit; }
 .prose p { margin: 0 0 1.35em; }
 .prose img { border-radius: 18px; margin: 2em 0 .5em; }
 .prose blockquote { margin: 2em 0; padding: 18px 24px; border-inline-start: 5px solid var(--sun); background: #fff9ee; font-size: 1.12rem; }
+.prose a { color: var(--blue); text-decoration: underline; text-underline-offset: 4px; }
+.prose .comparison-wrap { overflow-x: auto; margin: 2em 0; border: 1px solid var(--line); border-radius: 16px; }
+.prose table { width: 100%; min-width: 620px; border-collapse: collapse; background: #fff; }
+.prose th, .prose td { padding: 14px 16px; text-align: start; vertical-align: top; border-bottom: 1px solid var(--line); }
+.prose th { color: var(--blue); background: var(--paper); font-weight: 800; }
+.prose tr:last-child td { border-bottom: 0; }
+.prose .answer-box { margin: 1.5em 0 2em; padding: 20px 22px; border-radius: 16px; background: var(--paper); border: 1px solid var(--line); }
+.prose .answer-box p:last-child { margin-bottom: 0; }
 .sources { margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--line); }
 .sources a { text-decoration: underline; text-underline-offset: 4px; }
 .breadcrumb { color: var(--muted); font-size: .92rem; }
