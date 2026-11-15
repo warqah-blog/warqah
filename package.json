@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && cp dist/client/sitemap-0.xml dist/client/google-sitemap.xml",
     "preview": "npm run build && wrangler dev",
     "generate-types": "wrangler types",
     "deploy": "npm run build && wrangler pages deploy dist/client --project-name warqah"
