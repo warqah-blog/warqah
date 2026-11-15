@@ -6,6 +6,6 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   site: 'https://warqah.pages.dev',
   output: 'static',
-  integrations: [sitemap({ i18n: { defaultLocale: 'ar', locales: { ar: 'ar-SA', en: 'en' } } })],
+  integrations: [sitemap({ filter: (page) => page !== 'https://warqah.pages.dev/' })],
   adapter: cloudflare(),
 });

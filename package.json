@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "npm run build && wrangler dev",
     "generate-types": "wrangler types",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && wrangler pages deploy dist/client --project-name warqah"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.3.4",
