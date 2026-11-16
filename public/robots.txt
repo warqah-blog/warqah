@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://warqah.pages.dev/google-sitemap.xml
+Sitemap: https://warqah.blog/google-sitemap.xml

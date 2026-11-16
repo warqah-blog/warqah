@@ -4,8 +4,8 @@ import sitemap from '@astrojs/sitemap';
 import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
-  site: 'https://warqah.pages.dev',
+  site: 'https://warqah.blog',
   output: 'static',
-  integrations: [sitemap({ filter: (page) => page !== 'https://warqah.pages.dev/' })],
+  integrations: [sitemap({ filter: (page) => page !== 'https://warqah.blog/' })],
   adapter: cloudflare(),
 });
